@@ -1,0 +1,23 @@
+version: "3.8"
+# services is basically porjects like we have node_api project then we will have frontend porject
+services: 
+ api: # it's not mandatory to have same name of services as project folder.
+   build: ./node_api  # image will build inside api folder
+   container_name: api_container  # name of the container
+   ports:
+    - '5000:5000' # when have list of ports thats why it contain hyphen 
+   volumes: 
+    - ./node_api:/app # left side porject folder: where docker folder going to map 
+    - /app/node_modules # to make sure node_modules inside container doesn't get deleted bcz of the above volume
+  
+ myblog:
+   build: ./myblog
+   container_name: frontend_blog_container
+   ports:
+    - '3000:3000'
+   volumes:
+    - ./myblog:/frontend_app
+    - /frontend_app/node_modules
+   stdin_open: true # keeps interactive even runing on deattached mode
+   tty: true # make docker compose interactive 
+  
